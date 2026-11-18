@@ -3,19 +3,16 @@ import pandas as pd
 import streamlit as st
 
 st.set_page_config(
-    page_title="ගුරු ඇගයීම්  ලකුණු පද්ධතිය", page_icon="📚", layout="centered"
+    page_title="ගුරු ඇගයීම් ලකුණු පද්ධතිය", page_icon="📚", layout="centered"
 )
 
-# දත්ත ගොනුවේ නම
 DATA_FILE = "student_marks.csv"
 
 
-# දත්ත ගොනුව පරීක්ෂා කිරීම හෝ සෑදීම
 def load_data():
   if os.path.exists(DATA_FILE):
     return pd.read_csv(DATA_FILE)
   else:
-    # මුල් දත්ත ලැයිස්තුව
     df = pd.DataFrame(
         columns=["Student_ID", "Student_Name", "Assessment_Name", "Marks"]
     )
@@ -25,10 +22,13 @@ def load_data():
 df = load_data()
 
 st.title("📚 ගුරු ඇගයීම් ලකුණු කළමනාකරණය")
-st.write("ඉගැන්වීම් අතරතුර ඉතා ඉක්මනින් සිසුන්ගේ ලකුණු ඇතුළත් කරන්න.")
+st.write(
+    "ඉගැන්වීම් අතරතුර ඉතා ඉක්මනින් සිසුන්ගේ ලකුණු ඇතුළත් කරන්න (සේව් වූ පසු"
+    " කොටු ස්වයංක්‍රීයව හිස් වේ)."
+)
 
-# පෝරමය (Form)
-with st.form("marks_form"):
+# clear_on_submit=True මඟින් ලකුණු Save වූ පසු text boxes ස්වයංක්‍රීයව ක්ලියර් වේ
+with st.form("marks_form", clear_on_submit=True):
   st.subheader("ලකුණු ඇතුළත් කිරීම")
 
   col1, col2 = st.columns(2)
@@ -66,12 +66,10 @@ with st.form("marks_form"):
     else:
       st.warning("කරුණාකර සිසු අංකය සහ නම ඇතුළත් කරන්න.")
 
-# ඇතුළත් කළ දත්ත පෙන්වීම
 st.divider()
 st.subheader("📊 මෙතෙක් ඇතුළත් කළ ලකුණු සාරාංශය")
 
 if not df.empty:
-  # සෙවුම් පහසුකමක්
   search_query = st.text_input(
       "සිසු නමින් හෝ අංකයෙන් සොයන්න (Search):", ""
   )
@@ -84,7 +82,6 @@ if not df.empty:
   else:
     st.dataframe(df, use_container_width=True)
 
-  # CSV ලෙස ඩවුන්ලෝඩ් කරගැනීමට බොත්තමක්
   csv = df.to_csv(index=False).encode("utf-8")
   st.download_button(
       label="සියලුම දත්ත CSV ලෙස බාගත කරගන්න (Download)",
@@ -94,4 +91,3 @@ if not df.empty:
   )
 else:
   st.info("තවම දත්ත ඇතුළත් කර නැත.")
-
