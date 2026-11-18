@@ -1,4 +1,4 @@
-import os
+ import os
 import pandas as pd
 import streamlit as st
 
@@ -15,7 +15,7 @@ def load_data():
   if os.path.exists(DATA_FILE):
     return pd.read_csv(DATA_FILE)
   else:
-    # මුල් දත්ත ලැයිස්තුව (මෙහි ඔබේ පන්තියේ සිසුන්ගේ විස්තර ඇතුළත් කළ හැක)
+    # මුල් දත්ත ලැයිස්තුව
     df = pd.DataFrame(
         columns=["Student_ID", "Student_Name", "Assessment_Name", "Marks"]
     )
@@ -46,7 +46,9 @@ with st.form("marks_form"):
             "ප්‍රායෝගික ඇගයීම",
         ],
     )
-    marks = st.number_input("ලකුණු (0 - 100)", min_value =0.0, max_va=value 0.0, step=1.0)
+    marks = st.number_input(
+        "ලකුණු (0 - 100)", min_value=0.0, max_value=100.0, step=1.0
+    )
 
   submit_button = st.form_submit_button(label="ලකුණු සුරකින්න (Save)")
 
@@ -60,7 +62,7 @@ with st.form("marks_form"):
       })
       df = pd.concat([df, new_entry], ignore_index=True)
       df.to_csv(DATA_FILE, index=False)
-      st.success(f" සාර්ථකයි! {student_name} ගේ ලකුණු සුරකින ලදී.")
+      st.success(f"සාර්ථකයි! {student_name} ගේ ලකුණු සුරකින ලදී.")
     else:
       st.warning("කරුණාකර සිසු අංකය සහ නම ඇතුළත් කරන්න.")
 
@@ -85,10 +87,11 @@ if not df.empty:
   # CSV ලෙස ඩවුන්ලෝඩ් කරගැනීමට බොත්තමක්
   csv = df.to_csv(index=False).encode("utf-8")
   st.download_button(
-      label="ସ සියලුම දත්ත CSV ලෙස බාගත කරගන්න (Download)",
+      label="සියලුම දත්ත CSV ලෙස බාගත කරගන්න (Download)",
       data=csv,
       file_name="student_marks_report.csv",
       mime="text/csv",
   )
 else:
   st.info("තවම දත්ත ඇතුළත් කර නැත.")
+
