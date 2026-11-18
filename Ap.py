@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 
 st.set_page_config(
-    page_title="ගුරු ඇගයීම් ලකුණු පද්ධතිය", page_icon="📚", layout="centered"
+    page_title="ගුරු ඇගයීම්  ලකුණු පද්ධතිය", page_icon="📚", layout="centered"
 )
 
 # දත්ත ගොනුවේ නම
