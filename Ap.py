@@ -46,7 +46,7 @@ with st.form("marks_form"):
             "ප්‍රායෝගික ඇගයීම",
         ],
     )
-    marks = st.number_input("ලකුණු (0 - 100)", min_val=0.0, max_val=100.0, step=1.0)
+    marks = st.number_input("ලකුණු (0 - 100)", min_value =0.0, max_va=value 0.0, step=1.0)
 
   submit_button = st.form_submit_button(label="ලකුණු සුරකින්න (Save)")
 
